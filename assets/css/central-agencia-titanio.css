@@ -1,0 +1,9 @@
+main#config_page {
+  font-family: 'Exo', sans-serif;
+}
+
+.card,
+select {
+  max-width: none !important;
+}
+

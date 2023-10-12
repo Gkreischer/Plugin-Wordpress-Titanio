@@ -35,7 +35,7 @@ function central_titanio_add_custom_post()
         'rewrite' => array('slug' => 'titanio'),
         'has_archive' => true,
         'hierarchical' => false,
-        'menu_icon' => 'dashicons-list-view'
+        'menu_icon' => 'dashicons-superhero-alt'
     );
     register_post_type('titanio', $args);
 }

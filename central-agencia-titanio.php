@@ -2,12 +2,12 @@
 
 /*
  * Plugin Name:       Central Agencia Titanio
- * Plugin URI:        https://gkdeveloper.com.br
+ * Plugin URI:        https://agenciatitanio.com.br
  * Description:       Central da Agencia Titanio
  * Version:           0.95
  * Requires at least: 5.2
  * Requires PHP:      7.2
- * Author:            Gustavo Kreischer de Almeida
+ * Author:            Gustavo Kreischer de Almeida - Ag. Titânio
  * Author URI:        https://gkdeveloper.com.br
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -58,9 +58,6 @@ if (!class_exists('CentralAgenciaTitanio')) {
         {
             require_once(MY_PLUGIN_PATH . '/includes/custom-post-types.php');
 
-            // Registrar a função para ser executada quando o plugin é ativado
-            register_activation_hook(__FILE__, array($this, 'add_my_custom_page'));
-
 
             // Carregar Bootstrap no painel administrativo
             add_action('admin_enqueue_scripts', array($this, 'load_bootstrap'));
@@ -72,8 +69,6 @@ if (!class_exists('CentralAgenciaTitanio')) {
             require_once(MY_PLUGIN_PATH . '/includes/plugins.php');
             require_once(MY_PLUGIN_PATH . '/includes/plugins-category.php');
 
-            // Registrar a função para ser executada quando o plugin é desativado
-            register_deactivation_hook(__FILE__, array($this, 'remove_my_custom_page'));
         }
 
         public function load_bootstrap()

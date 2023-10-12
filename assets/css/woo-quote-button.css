@@ -1,0 +1,4 @@
+.card,
+select {
+  max-width: none !important;
+}

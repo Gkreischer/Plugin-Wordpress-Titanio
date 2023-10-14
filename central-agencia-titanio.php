@@ -52,6 +52,7 @@ if (!class_exists('CentralAgenciaTitanio')) {
             require_once($path . 'wp-load.php'); // Ajuste o caminho conforme necessário
 
             require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
 
         public function initialize()
@@ -65,6 +66,7 @@ if (!class_exists('CentralAgenciaTitanio')) {
             add_action('admin_enqueue_scripts', array($this, 'load_assets'));
 
             require_once(MY_PLUGIN_PATH . '/includes/install-plugins.php');
+            require_once(MY_PLUGIN_PATH . '/includes/get-plugins.php');
             require_once(MY_PLUGIN_PATH . '/includes/remove-plugins.php');
             require_once(MY_PLUGIN_PATH . '/includes/plugins.php');
             require_once(MY_PLUGIN_PATH . '/includes/plugins-category.php');
@@ -90,6 +92,6 @@ if (!class_exists('CentralAgenciaTitanio')) {
 
 
 
-    $wooQuoteButtonPlugin = new CentralAgenciaTitanio;
-    $wooQuoteButtonPlugin->initialize();
+    $CentralAgenciaTitanio = new CentralAgenciaTitanio;
+    $CentralAgenciaTitanio->initialize();
 }

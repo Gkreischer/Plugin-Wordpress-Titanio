@@ -22,7 +22,7 @@
                                     <?php
                                     $plugins = TITANIO_PLUGINS;
                                     $plugins_category = TITANIO_PLUGINS_CATEGORY;
-
+                                    
                                     foreach ($plugins_category as $category) {
                                     ?>
                                         <h5 class="fw-bold text-capitalize pt-3"><?= $category; ?></h5>
@@ -31,6 +31,7 @@
                                                 <tr>
                                                     <th scope="col">Nome</th>
                                                     <th scope="col">Versão</th>
+                                                    <th scope="col">Instalado</th>
                                                     <th scope="col">Ação</th>
                                                 </tr>
                                             </thead>
@@ -41,19 +42,19 @@
                                                     if ($config['category'] == $category) {
                                                         $isPluginActive = in_array($name . '/' . $config['entry_file'], apply_filters('active_plugins', get_option('active_plugins')));
                                                         $plugin_slug = $name;
-                                                        $plugin_version = $config['version'];
                                                         $plugin_entry = $config['entry_file'];
                                                         $plugin_category = $config['category'];
                                                 ?>
 
                                                         <tr>
                                                             <td style="width: 50%;"><?php echo $plugin_slug; ?></td>
-                                                            <td><?php echo $plugin_version; ?></td>
+                                                            <td class="last_version" data-plugin-name="<?php echo $name; ?>"></td>
+                                                            <td class="installed_version" data-plugin-name="<?php echo $name; ?>"></td>
                                                             <td class="text-center">
                                                                 <?php if (!$isPluginActive) { ?>
-                                                                    <button class="btn btn-primary install-button btn-sm w-100 fw-bold" data-plugin-name="<?php echo $name; ?>" data-plugin-version="<?php echo $plugin_version; ?>" data-plugin-entry="<?php echo $plugin_entry; ?>"><span>Instalar</span></button>
+                                                                    <button class="btn btn-primary install-button btn-sm w-100 fw-bold" data-plugin-name="<?php echo $name; ?>" data-plugin-entry="<?php echo $plugin_entry; ?>"><span>Instalar</span></button>
                                                                 <?php } else { ?>
-                                                                    <button class="btn btn-danger remove-button btn-sm w-100 fw-bold" data-plugin-name="<?php echo $name; ?>" data-plugin-version="<?php echo $plugin_version; ?>" data-plugin-entry="<?php echo $plugin_entry; ?>"><span>Remover</span></button>
+                                                                    <button class="btn btn-danger remove-button btn-sm w-100 fw-bold" data-plugin-name="<?php echo $name; ?>" data-plugin-entry="<?php echo $plugin_entry; ?>"><span>Remover</span></button>
                                                                 <?php } ?>
                                                             </td>
                                                         </tr>
@@ -86,6 +87,59 @@
 <link href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 <script>
     jQuery(document).ready(function($) {
+
+        function getLatestPluginVersions(pluginSlug) {
+            $.ajax({
+                url: 'https://api.wordpress.org/plugins/info/1.0/' + pluginSlug + '.json',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                    // A resposta contém informações sobre o plugin, incluindo a versão mais recente
+                    var latestVersion = response.version;
+                    // Atualize a versão na tabela
+                    $('.last_version[data-plugin-name="' + pluginSlug + '"]').text(latestVersion);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error(textStatus, errorThrown);
+                }
+            });
+        }
+
+        // Função para buscar as versões mais recentes de todos os plugins instalados
+        function getLatestInstalledPluginVersions() {
+            var installedPlugins = $('.installed_version');
+
+            installedPlugins.each(function() {
+                var pluginSlug = $(this).data('plugin-name');
+                getLatestPluginVersions(pluginSlug);
+            });
+        }
+
+        // Chame a função para buscar as versões mais recentes na inicialização
+        getLatestInstalledPluginVersions();
+
+        function get_installed_plugins_versions() {
+            $.ajax({
+                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                type: 'GET',
+                data: {
+                    action: 'central_agencia_titanio_get_installed_plugins_version'
+                },
+                success: function(response) {
+                    
+                    $.each(response, function(index, plugin) {
+                        $('.installed_version[data-plugin-name="' + plugin['TextDomain'] + '"]').text(plugin['Version']);
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error(textStatus, errorThrown);
+                }
+            });
+        }
+
+        get_installed_plugins_versions();
+
 
         // Instale ou remova o plugin
         $('.install-button, .remove-button').on('click', function() {
@@ -123,6 +177,7 @@
                     if (isInstallButton && isSuccess) {
                         button.removeClass('btn-primary').addClass('btn-danger');
                         button.removeClass('install-button').addClass('remove-button').text('Remover');
+                        
                     } else {
                         button.removeClass('btn-danger').addClass('btn-primary');
                         button.removeClass('remove-button').addClass('install-button').text('Instalar');
@@ -133,6 +188,8 @@
 
                     // Habilita o botao para executar a requisição
                     button.prop('disabled', false);
+
+                    get_installed_plugins_versions();
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {
                     // Lidar com erros da solicitação aqui

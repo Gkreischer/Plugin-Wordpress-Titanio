@@ -25,6 +25,13 @@ function central_agencia_titanio_remove_plugin()
     if (is_wp_error($result)) {
         wp_send_json_error('Erro ao remover o plugin: ' . $result->get_error_message());
     } else {
-        wp_send_json_success('Plugin removido com sucesso.');
+        // Remova a pasta do plugin após a desinstalação bem-sucedida
+        $deleted = delete_plugins(array($plugin_slug . '/' . $plugin_entry_file));
+
+        if ($deleted) {
+            wp_send_json_success('Plugin e pasta removidos com sucesso.');
+        } else {
+            wp_send_json_error('Erro ao remover a pasta do plugin.');
+        }
     }
 }

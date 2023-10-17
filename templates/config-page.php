@@ -25,7 +25,7 @@
                                     
                                     foreach ($plugins_category as $category) {
                                     ?>
-                                        <h5 class="fw-bold text-capitalize pt-3"><?= $category; ?></h5>
+                                        <h5 class="fw-bold text-uppercase pt-3"><?= $category; ?></h5>
                                         <table class="table table-striped table-bordered table-sm table-hover table-responsive">
                                             <thead>
                                                 <tr>
@@ -42,15 +42,16 @@
                                                     if ($config['category'] == $category) {
                                                         $isPluginActive = in_array($name . '/' . $config['entry_file'], apply_filters('active_plugins', get_option('active_plugins')));
                                                         $plugin_slug = $name;
+                                                        $plugin_name = $config['name'];	
                                                         $plugin_entry = $config['entry_file'];
                                                         $plugin_category = $config['category'];
                                                 ?>
 
                                                         <tr>
-                                                            <td style="width: 50%;"><?php echo $plugin_slug; ?></td>
+                                                            <td style="width: 50%;"><?php echo $plugin_name; ?></td>
                                                             <td class="last_version" data-plugin-name="<?php echo $name; ?>"></td>
                                                             <td class="installed_version" data-plugin-name="<?php echo $name; ?>"></td>
-                                                            <td class="text-center">
+                                                            <td id="actions_buttons" class="text-center">
                                                                 <?php if (!$isPluginActive) { ?>
                                                                     <button class="btn btn-primary install-button btn-sm w-100 fw-bold" data-plugin-name="<?php echo $name; ?>" data-plugin-entry="<?php echo $plugin_entry; ?>"><span>Instalar</span></button>
                                                                 <?php } else { ?>
@@ -100,7 +101,6 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {
-                    console.log(response);
                     // A resposta contém informações sobre o plugin, incluindo a versão mais recente
                     var latestVersion = response.version;
                     // Atualize a versão na tabela
@@ -189,7 +189,6 @@
                 .done(function(response) {
                     // Lidar com a resposta da instalação ou remoção aqui
 
-                    console.log(response);
                     var isSuccess = response.success;
 
                     if(!response.success)
@@ -207,6 +206,7 @@
                     } else {
                         button.removeClass('btn-danger').addClass('btn-primary');
                         button.removeClass('remove-button').addClass('install-button').text('Instalar');
+                        $('.installed_version[data-plugin-name="' + pluginName + '"]').text('');	
                     }
 
                     // Remova o ícone de carregamento

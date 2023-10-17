@@ -41,6 +41,17 @@ function central_titanio_add_custom_post()
 }
 add_action('init', 'central_titanio_add_custom_post');
 
+function central_titanio_modify_admin_menu() {
+    global $menu;
+    
+    // Remova a opção "Todos" (substitua "Ag. Titanio" pelo nome exato do seu Custom Post Type)
+    remove_submenu_page('edit.php?post_type=titanio', 'edit.php?post_type=titanio');
+    
+    // Remova a opção "Adicionar" (substitua "Ag. Titanio" pelo nome exato do seu Custom Post Type)
+    remove_submenu_page('edit.php?post_type=titanio', 'post-new.php?post_type=titanio');
+}
+add_action('admin_menu', 'central_titanio_modify_admin_menu');
+
 // Adicione a subpágina de configuração dentro de um gancho de admin_menu
 function central_titanio_add_config_page()
 {

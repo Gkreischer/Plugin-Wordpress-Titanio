@@ -60,7 +60,7 @@ function central_titanio_add_config_page()
         'Plugins',
         'Plugins',
         'manage_options',
-        'central-titanio-config',
+        'central-titanio-plugins',
         'central_titanio_plugins_page_callback'
     );
 }

@@ -32,6 +32,21 @@ $plugins = [
         'hide_version_download' => true,
         'category' => 'segurança',
     ],
+    'wp-fastest-cache' => [
+        'entry_file' => 'wpFastestCache.php',
+        'hide_version_download' => false,
+        'category' => 'desempenho',
+    ],
+    'wp-mail-smtp' => [
+        'entry_file' => 'wp_mail_smtp.php',
+        'hide_version_download' => false,
+        'category' => 'email',
+    ],
+    'wordpress-seo' => [
+        'entry_file' => 'wp-seo.php',
+        'hide_version_download' => false,
+        'category' => 'SEO',
+    ]
 ];
 
 

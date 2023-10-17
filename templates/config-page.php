@@ -88,6 +88,12 @@
 <script>
     jQuery(document).ready(function($) {
 
+        /**
+         * Função para buscar a versão mais recente de um plugin
+         * @param {string} pluginSlug O nome do plugin
+         * @return {string} A versão mais recente
+         * 
+         */
         function getLatestPluginVersions(pluginSlug) {
             $.ajax({
                 url: 'https://api.wordpress.org/plugins/info/1.0/' + pluginSlug + '.json',
@@ -106,7 +112,10 @@
             });
         }
 
-        // Função para buscar as versões mais recentes de todos os plugins instalados
+        /**
+         * Função para buscar as versões mais recentes de todos os plugins
+         * @return {void}
+         */
         function getLatestInstalledPluginVersions() {
             var installedPlugins = $('.installed_version');
 
@@ -119,6 +128,11 @@
         // Chame a função para buscar as versões mais recentes na inicialização
         getLatestInstalledPluginVersions();
 
+        /**
+         * Função para buscar as versões instaladas de todos os plugins
+         * @return {void}
+         * 
+         */
         function get_installed_plugins_versions() {
             $.ajax({
                 url: '<?php echo admin_url('admin-ajax.php'); ?>',
@@ -141,13 +155,18 @@
         get_installed_plugins_versions();
 
 
-        // Instale ou remova o plugin
+        /**
+         * Função para instalar ou remover um plugin
+         * @return {void}
+         * 
+         */
         $('.install-button, .remove-button').on('click', function() {
             var button = $(this); // Armazena uma referência ao botão
             var pluginName = button.data('plugin-name');
             var pluginVersion = button.data('plugin-version');
             var pluginEntryFile = button.data('plugin-entry');
             var isInstallButton = button.hasClass('install-button');
+            var errorMessage = '';	
 
             // Obtenha a referência ao elemento de ícone de carregamento
             var loadingIcon = $('<i class="fa fa-spinner" aria-hidden="true"></i>');
@@ -173,6 +192,13 @@
                     console.log(response);
                     var isSuccess = response.success;
 
+                    if(!response.success)
+                    {
+                        alert(response.data);
+                        errorMessage = response.data;
+                        console.error(errorMessage)
+                    }
+
                     // Restaure o botão para o texto original ou "Remover" ou "Instalar"
                     if (isInstallButton && isSuccess) {
                         button.removeClass('btn-primary').addClass('btn-danger');
@@ -189,6 +215,7 @@
                     // Habilita o botao para executar a requisição
                     button.prop('disabled', false);
 
+                    // Obtem a versão dos plugins instalados
                     get_installed_plugins_versions();
                 })
                 .fail(function(jqXHR, textStatus, errorThrown) {

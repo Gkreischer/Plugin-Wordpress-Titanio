@@ -12,7 +12,7 @@ function central_agencia_titanio_install_plugin()
 
     $plugin_slug = sanitize_text_field($_POST['plugin_name']);
     $plugin_hide_version = sanitize_text_field($_POST['plugin_hide_version']);
-    $plugin_version =  !$plugin_hide_version ? central_agencia_titanio_get_information_plugin_version($plugin_slug)['Version'] : '';;
+    $plugin_version =  !$plugin_hide_version ? '.' . central_agencia_titanio_get_information_plugin_version($plugin_slug)[1] : '';;
     $plugin_entry_file = sanitize_text_field($_POST['plugin_entry_file']);
 
     // Crie a URL do plugin no repositório do WordPress
@@ -59,7 +59,7 @@ function central_agencia_titanio_install_plugin()
             // Ative o plugin
             $activation_result = activate_plugin($installed_plugin_file);
             if (is_wp_error($activation_result)) {
-                wp_send_json_error('Erro ao ativar o plugin: ' . $activation_result->get_error_message() . ' caminho: ' . $installed_plugin_file . 'Download URL' . $plugin_url);
+                wp_send_json_error('Erro ao ativar o plugin: ' . $activation_result->get_error_message() . ' caminho: ' . $installed_plugin_file . ' Download URL' . $plugin_url);
             } else {
                 wp_send_json_success('Plugin instalado e ativado com sucesso!');
             }
@@ -94,8 +94,6 @@ function central_agencia_titanio_get_information_plugin_version(string $plugin_s
             $plugin_version = $data->version;
             // $plugin_description = $data->description;
             // $plugin_author = $data->author;
-            
-            
             return [$plugin_name, $plugin_version];
 
         } else {

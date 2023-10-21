@@ -48,10 +48,46 @@ $plugins = [
         'category' => 'email',
     ],
     'wordpress-seo' => [
-        'name' => 'Yast SEO',
+        'name' => 'Yoast SEO',
         'entry_file' => 'wp-seo.php',
         'hide_version_download' => false,
         'category' => 'seo',
+    ],
+    'wp-security-audit-log' => [
+        'name' => 'Wp Audity Log',
+        'entry_file' => 'wp-security-audit-log.php',
+        'hide_version_download' => false,
+        'category' => 'auditoria',
+    ],
+    'eps-301-redirects' => [
+        'name' => '301 Redirects',
+        'entry_file' => 'eps-301-redirects.php',
+        'hide_version_download' => false,
+        'category' => 'redirecionamento',
+    ],
+    'quttera-web-malware-scanner' => [
+        'name' => 'Quttera Web Malware Scanner',
+        'entry_file' => 'quttera_wm_scanner.php',
+        'hide_version_download' => false,
+        'category' => 'segurança',
+    ],
+    'debug-bar' => [
+        'name' => 'Debug Bar',
+        'entry_file' => 'debug-bar.php',
+        'hide_version_download' => false,
+        'category' => 'desenvolvimento',
+    ],
+    'query-monitor' => [
+        'name' => 'Query Monitor',
+        'entry_file' => 'query-monitor.php',
+        'hide_version_download' => false,
+        'category' => 'desenvolvimento',
+    ],
+    'show-current-template' => [
+        'name' => 'Show Current Template',
+        'entry_file' => 'show-current-template.php',
+        'hide_version_download' => false,
+        'category' => 'desenvolvimento',
     ]
 ];
 

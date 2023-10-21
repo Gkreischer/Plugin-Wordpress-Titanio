@@ -1,6 +1,6 @@
 <?php
 
-$plugins_category = ['segurança', 'design' , 'backup', 'desempenho', 'email', 'seo'];
+$plugins_category = ['auditoria', 'segurança', 'design', 'desenvolvimento', 'backup', 'desempenho', 'email', 'redirecionamento', 'seo'];
 
 // Ordena em ordem alfabética
 natsort($plugins_category);

@@ -69,5 +69,5 @@ add_action('admin_menu', 'central_titanio_add_config_page');
 // Callback para a página de configuração
 function central_titanio_plugins_page_callback()
 {
-    include_once(MY_PLUGIN_PATH . '/templates/config-page.php');
+    include_once(MY_PLUGIN_PATH . '/views/config-page.php');
 }

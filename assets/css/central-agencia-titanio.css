@@ -2,8 +2,18 @@ main#config_page {
   font-family: 'Exo', sans-serif;
 }
 
+
 .card,
 select {
   max-width: none !important;
 }
+
+.bg-gradient {
+  background: linear-gradient(215deg, #623871, #171D21) !important;
+  /* Substitua as cores e a direção do gradiente conforme necessário */
+  /* Você pode usar cores diferentes e ajustar a direção do gradiente */
+  /* Neste exemplo, estamos usando uma transição de cor de rosa (#ff3366) para azul (#33ccff) da esquerda para a direita */
+  /* Você pode personalizar as cores e a direção de acordo com suas preferências */
+}
+
 

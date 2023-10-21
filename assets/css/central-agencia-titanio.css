@@ -1,5 +1,9 @@
-main#config_page {
+main#config-page, main#activity-page {
   font-family: 'Exo', sans-serif;
+  
+  .form-check-label {
+    line-height: 1;
+  }
 }
 
 

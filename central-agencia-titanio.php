@@ -51,6 +51,8 @@ if (!class_exists('CentralAgenciaTitanio')) {
             // Include o WordPress para ter acesso às funções necessárias
             require_once($path . 'wp-load.php'); // Ajuste o caminho conforme necessário
 
+            require_once(MY_PLUGIN_PATH . '/includes/register-rest-api.php');
+
             require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
@@ -58,34 +60,30 @@ if (!class_exists('CentralAgenciaTitanio')) {
         public function initialize()
         {
             require_once(MY_PLUGIN_PATH . '/includes/custom-post-types.php');
-
-
-            // Carregar Bootstrap no painel administrativo
-            add_action('admin_enqueue_scripts', array($this, 'load_bootstrap'));
-
-            add_action('admin_enqueue_scripts', array($this, 'load_assets'));
-
             require_once(MY_PLUGIN_PATH . '/includes/install-plugins.php');
             require_once(MY_PLUGIN_PATH . '/includes/get-plugins.php');
             require_once(MY_PLUGIN_PATH . '/includes/remove-plugins.php');
             require_once(MY_PLUGIN_PATH . '/includes/plugins.php');
             require_once(MY_PLUGIN_PATH . '/includes/plugins-category.php');
 
+            // Carregar Bootstrap no painel administrativo
+            add_action('admin_enqueue_scripts', array($this, 'load_bootstrap'));
+            add_action('admin_enqueue_scripts', array($this, 'load_assets'));
+
         }
 
         public function load_bootstrap()
         {
             if (is_admin()) {
-                wp_enqueue_style('bootstrap', plugin_dir_url(__FILE__) . 'vendor/twbs/bootstrap/dist/css/bootstrap.min.css');
-                wp_enqueue_script('bootstrap', plugin_dir_url(__FILE__) . 'vendor/twbs/bootstrap/dist/js/bootstrap.min.js', array('jquery'), '1.0.0', true);
+                wp_enqueue_style('central_agencia_titanio_bootstrap', plugin_dir_url(__FILE__) . 'vendor/twbs/bootstrap/dist/css/bootstrap.min.css', true, '5.3.2', 'all');
+                wp_enqueue_script('central_agencia_titanio_bootstrap', plugin_dir_url(__FILE__) . 'vendor/twbs/bootstrap/dist/js/bootstrap.min.js', array('jquery'), '5.3.2', false);
             }
         }
 
         public function load_assets()
         {
             if (is_admin()) {
-                wp_enqueue_style('woo-quote-button', plugin_dir_url(__FILE__) . 'assets/css/central-agencia-titanio.css');
-                wp_enqueue_script('woo-quote-button', plugin_dir_url(__FILE__) . 'assets/js/central-agencia-titanio.js', array('jquery'), '1.0.0', true);
+                wp_enqueue_style('central_agencia_titanio', plugin_dir_url(__FILE__) . 'assets/css/central-agencia-titanio.css');
             }
         }
     }

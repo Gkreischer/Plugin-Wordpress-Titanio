@@ -53,7 +53,7 @@ function central_titanio_modify_admin_menu() {
 add_action('admin_menu', 'central_titanio_modify_admin_menu');
 
 // Adicione a subpágina de configuração dentro de um gancho de admin_menu
-function central_titanio_add_config_page()
+function central_titanio_add_plugins_page()
 {
     add_submenu_page(
         'edit.php?post_type=titanio',
@@ -64,10 +64,30 @@ function central_titanio_add_config_page()
         'central_titanio_plugins_page_callback'
     );
 }
-add_action('admin_menu', 'central_titanio_add_config_page');
+add_action('admin_menu', 'central_titanio_add_plugins_page');
 
 // Callback para a página de configuração
 function central_titanio_plugins_page_callback()
 {
-    include_once(MY_PLUGIN_PATH . '/views/config-page.php');
+    include_once(MY_PLUGIN_PATH . '/views/plugins-page.php');
+    exit;
+}
+
+function central_titanio_add_update_activity_page()
+{
+    add_submenu_page(
+        'edit.php?post_type=titanio',
+        'Atividades',
+        'Atividades',
+        'manage_options',
+        'central-titanio-activity',
+        'central_titanio_activity_page_callback'
+    );
+}
+add_action('admin_menu', 'central_titanio_add_update_activity_page');
+
+function central_titanio_activity_page_callback()
+{
+    include_once(MY_PLUGIN_PATH . '/views/activity-page.php');
+    exit;
 }

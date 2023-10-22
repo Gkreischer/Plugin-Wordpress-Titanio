@@ -125,9 +125,18 @@
                 console.log(form);
 
                 $.ajax({
-                    method: 'POST',
-                    url: '<?php echo get_rest_url(null, 'central-agencia-titanio/v1/activities') ?>',
-                    data: form
+                    method: 'post',
+                    url: '<?php echo get_rest_url(null, '/central-agencia-titanio/v1/activities') ?>',
+                    headers: {
+                        'X-WP-Nonce': '<?php echo wp_create_nonce('wp_rest') ?>'
+                    },
+                    data: form,
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
                 });
             });
 

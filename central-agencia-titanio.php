@@ -51,8 +51,6 @@ if (!class_exists('CentralAgenciaTitanio')) {
             // Include o WordPress para ter acesso às funções necessárias
             require_once($path . 'wp-load.php'); // Ajuste o caminho conforme necessário
 
-            require_once(MY_PLUGIN_PATH . '/includes/register-rest-api.php');
-
             require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
@@ -65,6 +63,9 @@ if (!class_exists('CentralAgenciaTitanio')) {
             require_once(MY_PLUGIN_PATH . '/includes/remove-plugins.php');
             require_once(MY_PLUGIN_PATH . '/includes/plugins.php');
             require_once(MY_PLUGIN_PATH . '/includes/plugins-category.php');
+            require_once(MY_PLUGIN_PATH . '/includes/rest/activities-post-api.php');
+            require_once(MY_PLUGIN_PATH . '/includes/rest/activities-get-api.php');
+            require_once(MY_PLUGIN_PATH . '/includes/sql/create_table_activities.php');
 
             // Carregar Bootstrap no painel administrativo
             add_action('admin_enqueue_scripts', array($this, 'load_bootstrap'));

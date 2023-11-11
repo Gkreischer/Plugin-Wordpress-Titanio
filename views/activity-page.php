@@ -250,6 +250,42 @@
 
                     }
                 });
+            })
+        });
+
+        // Envio do formulário
+        $('#form-activity').submit(function() {
+            event.preventDefault();
+
+            var form = $(this).serialize();
+
+            if($('#button-form-submit').data('id') != 'null') {
+                form += '&id=' + $('#button-form-submit').data('id');
+            }
+
+            console.log(form);
+
+            function showToast(toastElement) {
+                var toastElement = $('#liveToast');
+                const toastBootstrap = new bootstrap.Toast(toastElement[0]);
+                toastBootstrap.show();
+            }
+
+            $.ajax({
+                method: 'post',
+                url: '<?php echo get_rest_url(null, '/central-agencia-titanio/v1/activities') ?>',
+                headers: {
+                    'X-Wp-Nonce': '<?php echo wp_create_nonce('wp_rest') ?>'
+                },
+                data: form,
+                success: function(response) {
+                    console.log(response);
+                    window.location.reload();
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+
             });
 
             // Deleta uma atividade
